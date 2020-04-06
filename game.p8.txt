@@ -1,0 +1,87 @@
+x=64
+y=64
+dire=4
+tam=1
+vel=1
+apl={}
+apl.x=0
+apl.y=0
+
+function _update()
+
+		if dire==1 then
+		x=x+vel
+	end
+	if dire==2 then
+	 x=x-vel
+	end
+	if dire == 3 then
+		y=y+vel
+	end
+	if dire==4 then
+		y=y-vel
+	end
+	if btn(1) then dire=1 end
+	if btn(0) then dire=2 end
+	if btn(3) then dire=3 end
+	if btn(2) then dire=4 end
+	
+	if x>=128 then x=0 end
+	if y>=128 then y=0 end
+	if x<0 then x=128 end
+	if y<0 then y=128 end
+	if(pget(x,y))==11 then
+	 sfx(2)
+	 gos()
+	end
+	if(pget(x,y))==8 then
+		sfx(0)
+		rand()
+		pset(apl.x,apl.y,8)
+	end
+end
+
+i=0
+function _draw()
+	pset(x,y,11)
+	if i<1 then
+		for i=1, 7 do
+			pset(apl.x,apl.y,8)
+			rand()
+		end
+		i=i+1
+	end
+end
+
+function gayover()
+		cls()
+		x=64
+		y=64
+		dire=4
+		tam=1
+		vel=1
+		i=0
+		rand()
+end
+
+function gos()
+	sfx(-1,1)
+	print("moriste",50,64,3)
+	print("presiona z ",50,75,3)
+	vel=0
+	if btn(4) then
+		gayover()
+	end
+end
+
+
+function rand()
+	rx=10+rnd(127)
+	ry=10+rnd(127)
+	if(pget(rx,ry)==0) then
+		apl.x=rx
+		apl.y=ry
+	else
+		rand()
+	end
+end
